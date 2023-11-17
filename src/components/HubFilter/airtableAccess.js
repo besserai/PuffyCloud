@@ -31,8 +31,8 @@ export let defaultFilterState = {
     landmasses: { possibleValues: [], selectedValues: [], fieldNameInHub: "Name (from Landmass)" },
     countries: { possibleValues: [], selectedValues: [], fieldNameInHub: "Country name" },
     flyingHubs: { possibleValues: [], selectedValues: [], fieldNameInHub: "Flying Hub name" },
-    levels: { possibleValues: [0, 1, 2, 3], selectedValues: [], fieldNameInHub: "Pilot Level" },
-    seasons: { possibleValues: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], selectedValues: [], fieldNameInHub: "Best Season" },
+    levels: { possibleValues: levelsMapping, selectedValues: [], fieldNameInHub: "Pilot Level" },
+    seasons: { possibleValues: seasonsMapping, selectedValues: [], fieldNameInHub: "Best Season" },
     typesOfFlying: { possibleValues: typesOfFlyingOptions, selectedValues: [], fieldNameInHub: "Flying Category" },
 }
 
@@ -77,36 +77,49 @@ export class AirtableAccess {
     }
 
     getHubsForFilter(filter) {
-        // console.log("filter", filter)
-
+        console.log("filter", filter)
+        if (filter === undefined) {
+            console.warn("cannot apply undefined filter")
+            return []
+        }
         const filterCondition = (hub, filter) => {
-            // console.log("hub", hub)
             const result = Object.keys(filter).map((key) => {
                 const filterName = filter[key].fieldNameInHub
                 const filterFor = filter[key].selectedValues
                 const hubProperty = hub[filterName]
                 // check if filter is empty, in that case return true
-                if (filter[key].selectedValues.length > 0) {
+                if (filterFor.length > 0) {
                     // console.log("filter[key].selectedValues", filter[key].selectedValues)
-                    console.log("hubProperty", hubProperty)
                     // check overlap between filter and hub properties
-                    const overlap = hubProperty.map((value) => { filterFor.includes(value) })
-                    console.log(overlap)
-                    if (!filter[key].selectedValues.includes(hub[filter[key].fieldNameInHub][0])) {
-                        // console.log(filter[key].selectedValues.includes(hub[filter[key].fieldNameInHub][0]))
-                        // console.log("key not in selectedValues", hub[filter[key].fieldNameInHub])
-                        return false
+                    if (hubProperty === undefined) {
+                        console.log("hubProperty undefined")
+                        return true
                     }
+                    if (Array.isArray(hubProperty)) {
+                        // hubProperty is an array
+                        console.log("hubProperty", hubProperty)
+                        console.log("filterFor", filterFor)
+                        const overlap = hubProperty.map((value) => { return filterFor.includes(value) })
+                        console.log("overlap", overlap.some(element => element === true))
+                        return overlap.some(element => element === true);
+                    } else {
+                        // hubProperty is not an array
+                        return filterFor.includes(hubProperty)
+
+                    }
+                    // if (!filterFor.includes(hub[filterName][0])) {
+                    //     // console.log(filter[key].selectedValues.includes(hub[filter[key].fieldNameInHub][0]))
+                    //     // console.log("key not in selectedValues", hub[filter[key].fieldNameInHub])
+                    //     return false
+                    // }
                 }
                 return true
             }).every((value) => value === true)
-            console.log("result of filterCond", result)
             return result
         }
 
         // console.log("filterCondition", filterCondition(this.AllHubs[0], filter))
         // filter.landmasses.selectedValues.includes(hub["Name (from Landmass)"][0])
-        console.log("this.AllHubs", this.AllHubs)
         const hubsForFilter = this.AllHubs.filter((hub) => (filterCondition(hub, filter)));
         return hubsForFilter
     }
@@ -120,10 +133,8 @@ export class AirtableAccess {
 
         const selectedLandmassesIds = this.AllLandmasses.filter(landmass => selectedLandmasses.includes(landmass["Landmass Name"])).map(landmass => landmass["Landmass ID"])
 
-        console.log("selectedLandmasses", selectedLandmasses)
         const countryIds = this.AllLandmasses.filter(landmass => selectedLandmasses.includes(landmass["Landmass Name"])).reduce((countries, landmass) => [...countries, ...landmass["Countries"]], [])
         const countryNames = countryIds.map(id => this.getRecordById(id, countriesTableId)["Country name"])
-        console.log("countries", countryNames)
         return countryNames
 
         this.AllCountries.filter(country => selectedLandmasses.includes())

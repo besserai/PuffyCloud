@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+// import AirtableElememt from './AirtableAccess';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import HubFilter from './components/HubFilter/HubFilter';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      // light: '#757ce8',
+      main: '#ef41c4',
+      // dark: '#002884',
+      // contrastText: '#fff',
+    },
+    secondary: {
+      // light: '#ff7961',
+      main: '#c441ef',
+      // dark: '#ba000d',
+      // contrastText: '#000',
+    },
+  },
+});
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider theme={theme}>
+        <HubFilter />
+        {/* <AirtableElememt /> */}
+      </ThemeProvider>
     </div>
   );
 }
