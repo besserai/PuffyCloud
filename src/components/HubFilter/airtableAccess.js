@@ -7,7 +7,7 @@ const countriesTableId = "tblGwnRZsuKp1Wevv"
 const landmassesTableName = "Landmasses"
 const hubsTableName = "Flying Hubs"
 
-const typesOfFlyingOptions = [
+export const typesOfFlyingOptions = [
     "Acro",
     "Competition",
     "Groundhandling",
@@ -24,8 +24,8 @@ const typesOfFlyingOptions = [
     "Hangglider",
     "Paramotor",
 ]
-const seasonsMapping = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
-const levelsMapping = ["Schooling", "Beginner", "Independent", "Expert"]
+export const seasonsMapping = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
+export const levelsMapping = ["Schooling", "Beginner", "Independent", "Expert"]
 
 export let defaultFilterState = {
     landmasses: { possibleValues: [], selectedValues: [], fieldNameInHub: "Name (from Landmass)" },
