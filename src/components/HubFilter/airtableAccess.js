@@ -24,6 +24,18 @@ export const typesOfFlyingOptions = [
     "Hangglider",
     "Paramotor",
 ]
+
+// TEST CODE TO BE REMOVED
+
+const textField = document.getElementByAttribute('pc', 'fliying_style_btn');
+
+textField.innerText = typesOfFlyingOptions[0]
+
+console.log(typesOfFlyingOptions)
+
+// TEST CODE TO BE REMOVED
+
+
 export const seasonsMapping = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
 export const levelsMapping = ["Schooling", "Beginner", "Independent", "Expert"]
 
