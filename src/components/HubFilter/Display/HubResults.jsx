@@ -3,10 +3,10 @@ import HubCard from './HubCard'
 import './HubResults.css'
 
 export default function HubResults({ hubsToDisplay }) {
-    const [hubs, setHubs] = useState(null)
-    const [filteredHubs, setFilteredHubs] = useState([])
+    // const [hubs, setHubs] = useState(null)
+    // const [filteredHubs, setFilteredHubs] = useState([])
 
-    const testfilteredHubs = ['Hub1', 'Hub2', 'Hub3'];
+    // const testfilteredHubs = ['Hub1', 'Hub2', 'Hub3'];
 
 
     // async function fetchHubs() {
@@ -50,7 +50,7 @@ export default function HubResults({ hubsToDisplay }) {
         <div className='hub-grid'>
             {hubsToDisplay.map((hub, index) => (
                 // <div>{hub["Flying Hub name"]}</div>
-                <HubCard key={`hubcard-${index}`} hub={hub} />
+                <HubCard key={`hubcard-${hub["Flying Base name"]}`} hub={hub} />
             ))}
         </div>
     )
