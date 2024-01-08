@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 const HubCard = ({ hub }) => {
 
-    const name = hub["Flying Hub name"];
+    const name = hub["Flying Base name"];
 
     const [photoHeader, setPhotoHeader] = useState("https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg")
 
@@ -15,6 +15,7 @@ const HubCard = ({ hub }) => {
 
         if (hub["Photo Header"]) {
             setPhotoHeader(hub["Photo Header"][0].url)
+            console.log("hub photo for: ", name, hub["Photo Header"][0].url)
         }
     }
         , [])
